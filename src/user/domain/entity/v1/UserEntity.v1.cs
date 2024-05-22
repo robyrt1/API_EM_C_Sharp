@@ -1,11 +1,17 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API_EM_C_.src.user.domain.entity.v1
 {
+    [Table("users")]
     public class UserEntity
     {
-        public int id { get; } = Random.Shared.Next(10, 21);
-       public string Name { get; set; }
-       public string Email { get; set; }
+        [Key]
+        [Column("id")]
+        public int Id { get; set; }
+        [Column("username")]
+        public string UserName { get; set; }
+        [Column("email")]
+        public string Email { get; set; }
     }
 }

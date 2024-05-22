@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API_EM_C_.src.user.presentation.controller.v1
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UserController: ControllerBase
     {
         private readonly ILogger<UserController> _logger;

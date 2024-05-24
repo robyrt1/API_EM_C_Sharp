@@ -6,7 +6,7 @@ using Npgsql;
 
 namespace API_EM_C_.src.user.infra.repository
 {
-    public class UserRepository
+    public class UserRepository : IRepositoryUser
     {
         private readonly DatabaseContext _dbContext;
 

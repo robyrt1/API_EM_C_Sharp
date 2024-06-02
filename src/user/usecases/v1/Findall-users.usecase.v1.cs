@@ -1,7 +1,4 @@
-﻿using API_EM_C_.src.shared.application.constants;
-using API_EM_C_.src.shared.application.exceptions;
-using API_EM_C_.src.user.domain.entity.v1;
-using API_EM_C_.src.user.domain.port.repository;
+﻿using API_EM_C_.src.user.domain.port.repository;
 using API_EM_C_.src.user.domain.port.usecases.v1;
 using API_EM_C_.src.user.infra.repository;
 
@@ -11,9 +8,15 @@ namespace API_EM_C_.src.user.usecases.v1
     {
         private readonly IRepositoryUser _userRepository;
 
-        public FindallUsersUsecase(UserRepository userRepository)
+        public FindallUsersUsecase(IRepositoryUser userRepository)
         {
             _userRepository = userRepository;
+        }
+
+        public async Task<object> Execute(object input = null)
+        {
+            throw new NotImplementedException();
+
         }
 
         public async Task<object> Execute()

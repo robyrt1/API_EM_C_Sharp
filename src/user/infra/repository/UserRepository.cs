@@ -28,5 +28,10 @@ namespace API_EM_C_.src.user.infra.repository
                 throw;
             }
         }
+
+        public void AddUser(UserEntity user) { 
+            _dbContext.Users.Add(user);
+            _dbContext.SaveChanges();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using API_EM_C_.src.user.domain.port.repository;
+﻿using API_EM_C_.src.user.domain.entity.v1;
+using API_EM_C_.src.user.domain.port.repository;
 using API_EM_C_.src.user.domain.port.usecases.v1;
 using API_EM_C_.src.user.infra.repository;
 
@@ -24,9 +25,9 @@ namespace API_EM_C_.src.user.usecases.v1
             try
             {
                 var users = await _userRepository.GetUsers();
-                if (users == null || !users.Any())
+                if (users is null)
                 {
-                    return new object();
+                    return new UserEntity();
                 }
 
                 return users;

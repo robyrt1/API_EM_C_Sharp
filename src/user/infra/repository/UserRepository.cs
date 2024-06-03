@@ -1,11 +1,10 @@
-﻿using API_EM_C_.src.shared.infrastructure.services.Data;
-using API_EM_C_.src.user.domain.entity.v1;
-using API_EM_C_.src.user.domain.port.repository;
-using Npgsql;
-
-
-namespace API_EM_C_.src.user.infra.repository
+﻿namespace API_EM_C_.src.user.infra.repository
 {
+    using API_EM_C_.src.shared.infrastructure.services.Data;
+    using API_EM_C_.src.user.domain.entity.v1;
+    using API_EM_C_.src.user.domain.port.repository;
+    using Microsoft.EntityFrameworkCore;
+
     public class UserRepository : IRepositoryUser
     {
         private readonly DatabaseContext _dbContext;
@@ -16,9 +15,18 @@ namespace API_EM_C_.src.user.infra.repository
         }
 
         public async Task<IEnumerable<UserEntity>> GetUsers()
-        {            try
+        {
+            try
             {
-                var users =   _dbContext.Users.ToList();
+                var users = _dbContext.Users
+                    .Select(user => new UserEntity 
+                        { 
+                            Id = user.Id,
+                            UserName = user.UserName,
+                            Email = user.Email,
+                        })
+                    .ToList();
+
                 return users;
 
             }
@@ -29,7 +37,8 @@ namespace API_EM_C_.src.user.infra.repository
             }
         }
 
-        public void AddUser(UserEntity user) { 
+        public void AddUser(UserEntity user)
+        {
             _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
         }

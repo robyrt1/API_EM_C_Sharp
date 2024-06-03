@@ -18,11 +18,12 @@ namespace API_EM_C_.src.user.usecases.v1
         {
             try
             {
-                var userCreated = new UserEntity(
-                    input.UserName,
-                    input.Email,
-                    input.Password
-                );
+                var userCreated = new UserEntity 
+                {
+                    UserName = input.UserName,
+                    Email = input.Email,
+                    Password =input.Password
+                };
 
                  _userRepository.AddUser(userCreated);
 

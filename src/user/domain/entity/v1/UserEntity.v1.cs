@@ -17,11 +17,6 @@ namespace API_EM_C_.src.user.domain.entity.v1
         [Column("password")]
         public string Password { get; set; }
 
-        public UserEntity(string userName, string email, String password) 
-        {
-            UserName = userName;
-            Email = email;
-            Password = password;
-        }
+      
     }
 }

@@ -16,9 +16,7 @@
 
         public async Task<IEnumerable<UserEntity>> GetUsers()
         {
-            try
-            {
-                var users = _dbContext.Users
+                var users =  _dbContext.Users
                     .Select(user => new UserEntity 
                         { 
                             Id = user.Id,
@@ -29,12 +27,6 @@
 
                 return users;
 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Erro ao executar a consulta: {ex.Message}");
-                throw;
-            }
         }
 
         public void AddUser(UserEntity user)

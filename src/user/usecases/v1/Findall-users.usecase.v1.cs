@@ -1,7 +1,8 @@
-﻿using API_EM_C_.src.user.domain.entity.v1;
+﻿using API_EM_C_.src.shared.application.exceptions;
+using API_EM_C_.src.user.domain.entity.v1;
 using API_EM_C_.src.user.domain.port.repository;
 using API_EM_C_.src.user.domain.port.usecases.v1;
-using API_EM_C_.src.user.infra.repository;
+
 
 namespace API_EM_C_.src.user.usecases.v1
 {
@@ -20,21 +21,25 @@ namespace API_EM_C_.src.user.usecases.v1
 
         }
 
-        public async Task<object> Execute()
+        public async Task<IEnumerable<UserEntity>> Execute()
         {
             try
             {
-                var users = await _userRepository.GetUsers();
-                if (users is null)
+                var users =  await _userRepository.GetUsers();
+                if (users is null || !users.Any())
                 {
-                    return new UserEntity();
+                    Console.WriteLine(users.ToString());
+                    throw new GenerateErrorExceptionByCode(ExceptionCodes.USER_NO_LONGER_FOUND,"Do not exists users");
                 }
 
                 return users;
             }
+            catch (GenerateErrorExceptionByCode ex)
+            {
+                throw ;
+            }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
                 throw;
             }
         }

@@ -1,4 +1,6 @@
-﻿using API_EM_C_.src.shared.application.port;
+﻿using API_EM_C_.src.shared.application.constants;
+using API_EM_C_.src.shared.application.exceptions;
+using API_EM_C_.src.shared.application.port;
 using API_EM_C_.src.user.application.types;
 using API_EM_C_.src.user.domain.entity.v1;
 using API_EM_C_.src.user.domain.port.usecases.v1;
@@ -34,13 +36,37 @@ namespace API_EM_C_.src.user.presentation.controller.v1
 
         [HttpPost(Name = "Users")]
         public async Task<ActionResult> CreateUser([FromBody] UserValidator input) {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
-            }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-            var user =  _createUserPort.Execute(input);
-            return CreatedAtAction(nameof(CreateUser), new { id = user.Id }, user);
+                var user = _createUserPort.Execute(input);
+                return CreatedAtAction(nameof(CreateUser), new { id = user.Id }, user);
+
+            }
+            catch (GenerateErrorExceptionByCode ex)
+            {
+                return BadRequest(new
+                {
+                    StatusCode = ex.HttpStatus,
+                    Status = false,
+                    error = ex.Message,
+                    Data = ex.Data
+                });
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(new
+                {
+                    StatusCode = HttpStatusCode.INTERNAL_SERVER_ERROR,
+                    Status = false,
+                    error = ex.Message,
+                    Data = ex.Data
+                });
+            }
         }
 
     }
